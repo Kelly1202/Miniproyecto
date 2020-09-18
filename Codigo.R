@@ -10,3 +10,8 @@
  # toc: yes
 #csl: science.csl
 #---
+install.packages(recommenderlab)
+library(recommenderlab)
+
+
+

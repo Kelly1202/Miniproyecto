@@ -104,3 +104,4 @@ suggestMovies <- function(movie_df, user_df, user_id, num_movies){
   write.table(suggestions[2], row.names = F, col.names = F)
 }
 
+suggestMovies(movie_title_df, users_df, 308, 5)

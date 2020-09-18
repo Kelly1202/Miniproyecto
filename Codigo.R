@@ -53,3 +53,46 @@ setUserMovieCluster <- function(m_title_df, mclust, activeUser){
   activeUser$cluster <- df_aux[match(activeUser$MovieID, df_aux$MovieID),2]
   return(activeUser)
 }
+
+getAverageClusterRating <- function(mclust, activeUser, minRating = 3){
+  like <- aggregate(activeUser$rating,
+                    by=list(cluster=activeUser$cluster),
+                    mean)
+  if(max(like$x)<minRating){
+    like <- as.vector(0)
+  } else {
+    like <- as.vector(t(max(subset(like, x>=minRating, select=cluster))))
+  }
+  return(like)
+}
+
+
+getRecommendedMovies <- function(like, mclust, m_title_df){
+  df_aux <- data.frame(cbind(m_title_df$MovieID,
+                             clusterNum = mclust$cluster)
+  )
+  names(df_aux) = c("MovieID", "Cluster")
+  if(like==0){
+    recommend <- m_title_df[sample.int(n = nrow(m_title_df),
+                                       size = 100),1]
+  } else {
+    recommend <- as.vector(
+      t(subset(df_aux,
+               Cluster == like,
+               select = MovieID
+      )
+      )
+    )
+  }
+}
+getRecommendations <- function(movie_df, user_df, userID){
+  mclust <- clusterMovies(movie_df)
+  activeUser <- getUserInfo(user_df, userID)
+  activeUser <- setUserMovieCluster(movie_df, mclust, activeUser)
+  like <- getAverageClusterRating(mclust, activeUser)
+  recomendation <- getRecommendedMovies(like, mclust, movie_df)
+  recomendation <- recomendation[-activeUser$MovieID]
+  movieTitle <- movie_df[match(recomendation, movie_df$MovieID),2]
+  recomendation <- data.frame(recomendation, movieTitle)
+  return(recomendation)
+}

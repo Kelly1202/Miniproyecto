@@ -34,4 +34,15 @@ movie_title_df$ReleaseDate<-NULL
 movie_title_df$IMDb_URL<-NULL
 movie_title_df<-unique(movie_title_df)
 
+clusterMovies <- function(df, kclust = 10){
+  df <- df[,c(-1,-2)]
+  mclust <- kmeans(df, centers = kclust, nstart = 20)
+  return(mclust)
+}
+getUserInfo <- function(df, id){
+  myUser <- subset(df, UserID == id, select = c(MovieID, rating))
+  cluster <- 0
+  activeUser <- data.frame(myUser[order(myUser$MovieID),], cluster)
+  return(activeUser)
+}
 

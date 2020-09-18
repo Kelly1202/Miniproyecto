@@ -96,3 +96,11 @@ getRecommendations <- function(movie_df, user_df, userID){
   recomendation <- data.frame(recomendation, movieTitle)
   return(recomendation)
 }
+
+suggestMovies <- function(movie_df, user_df, user_id, num_movies){
+  suggestions <- getRecommendations(movie_df, user_df, user_id)
+  suggestions <- suggestions[1:num_movies,]
+  writeLines("Tal vez te gustaría ver también las siguientes películas:")
+  write.table(suggestions[2], row.names = F, col.names = F)
+}
+

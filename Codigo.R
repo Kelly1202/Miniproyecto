@@ -46,3 +46,10 @@ getUserInfo <- function(df, id){
   return(activeUser)
 }
 
+setUserMovieCluster <- function(m_title_df, mclust, activeUser){
+  df_aux <- data.frame(cbind(m_title_df$MovieID,
+                             clustNum = mclust$cluster))
+  names(df_aux) <- c("MovieID", "Cluster")
+  activeUser$cluster <- df_aux[match(activeUser$MovieID, df_aux$MovieID),2]
+  return(activeUser)
+}

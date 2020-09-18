@@ -26,4 +26,12 @@ names(movie_title_df) <- c("MovieID", "Title","ReleaseDate",
                            "Mystery", "Romance", "SciFi",
                            "Thriller", "War", "Western")
 
+movie_title_df<-unique(movie_title_df)
+names(users_df)<-c("UserID", "MovieID", "rating", "timestamp")
+users_df$timestamp<-NULL
+movie_title_df$video_release_date<-NULL
+movie_title_df$ReleaseDate<-NULL
+movie_title_df$IMDb_URL<-NULL
+movie_title_df<-unique(movie_title_df)
+
 

@@ -13,5 +13,17 @@
 install.packages(recommenderlab)
 library(recommenderlab)
 
+movie_url <- "http://files.grouplens.org/datasets/movielens/ml-100k/u.item"
+users_url <- "http://files.grouplens.org/datasets/movielens/ml-100k/u.data"
+movie_title_df <- read.table(movie_url,header = F,sep="|",quote = "\"")
+users_df <- read.table(users_url,header = F,sep="\t",quote = "\"")
+names(movie_title_df) <- c("MovieID", "Title","ReleaseDate",
+                           "video_release_date",
+                           "IMDb_URL", "unknown", "Action", "Adventure",
+                           "Animation", "Childrens", "Comedy", "Crime",
+                           "Documentary", "Drama", "Fantasy",
+                           "FilmNoir", "Horror", "Musical",
+                           "Mystery", "Romance", "SciFi",
+                           "Thriller", "War", "Western")
 
 
